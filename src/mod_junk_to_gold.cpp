@@ -9,6 +9,11 @@ public:
 
     void OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid /*lootguid*/) override
     {
+        if (!item)
+        {
+            return;
+        }
+
         if (item->GetTemplate()->Quality == ITEM_QUALITY_POOR)
         {
             SendTransactionInformation(player, item, count);
