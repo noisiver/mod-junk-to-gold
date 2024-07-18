@@ -9,7 +9,7 @@ public:
 
     void OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid /*lootguid*/) override
     {
-        if (!item)
+        if (!item || !item->GetTemplate())
         {
             return;
         }
