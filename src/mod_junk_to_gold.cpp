@@ -28,11 +28,11 @@ private:
         std::string name;
         if (count > 1)
         {
-            name = Acore::StringFormat("|cff9d9d9d|Hitem:%i::::::::80:::::|h[%s]|h|rx%i", item->GetTemplate()->ItemId, item->GetTemplate()->Name1, count);
+            name = Acore::StringFormat("|cff9d9d9d|Hitem:{}::::::::80:::::|h[{}]|h|rx{}", item->GetTemplate()->ItemId, item->GetTemplate()->Name1, count);
         }
         else
         {
-            name = Acore::StringFormat("|cff9d9d9d|Hitem:%i::::::::80:::::|h[%s]|h|r", item->GetTemplate()->ItemId, item->GetTemplate()->Name1);
+            name = Acore::StringFormat("|cff9d9d9d|Hitem:{}::::::::80:::::|h[{}]|h|r", item->GetTemplate()->ItemId, item->GetTemplate()->Name1);
         }
 
         uint32 money = item->GetTemplate()->SellPrice * count;
@@ -43,36 +43,36 @@ private:
         std::string info;
         if (money < SILVER)
         {
-            info = Acore::StringFormat("%s sold for %i copper.", name, copper);
+            info = Acore::StringFormat("{} sold for {} copper.", name, copper);
         }
         else if (money < GOLD)
         {
             if (copper > 0)
             {
-                info = Acore::StringFormat("%s sold for %i silver and %i copper.", name, silver, copper);
+                info = Acore::StringFormat("{} sold for {} silver and {} copper.", name, silver, copper);
             }
             else
             {
-                info = Acore::StringFormat("%s sold for %i silver.", name, silver);
+                info = Acore::StringFormat("{} sold for {} silver.", name, silver);
             }
         }
         else
         {
             if (copper > 0 && silver > 0)
             {
-                info = Acore::StringFormat("%s sold for %i gold, %i silver and %i copper.", name, gold, silver, copper);
+                info = Acore::StringFormat("{} sold for {} gold, {} silver and {} copper.", name, gold, silver, copper);
             }
             else if (copper > 0)
             {
-                info = Acore::StringFormat("%s sold for %i gold and %i copper.", name, gold, copper);
+                info = Acore::StringFormat("{} sold for {} gold and {} copper.", name, gold, copper);
             }
             else if (silver > 0)
             {
-                info = Acore::StringFormat("%s sold for %i gold and %i silver.", name, gold, silver);
+                info = Acore::StringFormat("{} sold for {} gold and {} silver.", name, gold, silver);
             }
             else
             {
-                info = Acore::StringFormat("%s sold for %i gold.", name, gold);
+                info = Acore::StringFormat("{} sold for {} gold.", name, gold);
             }
         }
 
