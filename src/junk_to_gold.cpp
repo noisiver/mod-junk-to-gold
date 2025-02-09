@@ -2,17 +2,20 @@
 
 void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid /*lootguid*/)
 {
-    if (!item || !item->GetTemplate())
-    {
-        return;
-    }
+	if(sConfigMgr->GetOption("JunkToGold.Enable", false))
+	{
+		if (!item || !item->GetTemplate())
+		{
+			return;
+		}
 
-    if (item->GetTemplate()->Quality == ITEM_QUALITY_POOR)
-    {
-        SendTransactionInformation(player, item, count);
-        player->ModifyMoney(item->GetTemplate()->SellPrice * count);
-        player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
-    }
+		if (item->GetTemplate()->Quality == ITEM_QUALITY_POOR)
+		{
+			SendTransactionInformation(player, item, count);
+			player->ModifyMoney(item->GetTemplate()->SellPrice * count);
+			player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
+		}
+	}
 }
 
 void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 count)

@@ -19,7 +19,7 @@
 void AddSC_JunkToGold();
 
 // Add all
-void Addmod_JunkToGold_lootScripts()
+void Addskeleton_moduleScripts()
 {
     AddSC_JunkToGold();
 }
