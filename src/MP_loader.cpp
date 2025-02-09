@@ -16,10 +16,10 @@
  */
 
 // From SC
-void AddSC_JunkToGold();
+void Addmod_junk_to_goldScripts();
 
 // Add all
 void Addskeleton_moduleScripts()
 {
-    AddSC_JunkToGold();
+    Addmod_junk_to_goldScripts();
 }

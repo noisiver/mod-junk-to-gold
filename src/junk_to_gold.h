@@ -1,11 +1,10 @@
 #ifndef MODULE_JUNKTOGOLD_H
 #define MODULE_JUNKTOGOLD_H
 
-#include "Chat.h"
-#include "Player.h"
 #include "ScriptMgr.h"
 #include "Config.h"
-#include <string>
+#include "Chat.h"
+#include "Player.h"
 
 class JunkToGold : public PlayerScript
 {
@@ -16,7 +15,7 @@ public:
     void SendTransactionInformation(Player* player, Item* item, uint32 count);
 };
 
-void AddSC_JunkToGold()
+void Addmod_junk_to_goldScripts()
 {
 	new JunkToGold();
 }

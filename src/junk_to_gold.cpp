@@ -2,7 +2,7 @@
 
 void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid /*lootguid*/)
 {
-	if(sConfigMgr->GetOption("JunkToGold.Enable", false))
+	if(sConfigMgr->GetOption("JunkToGold.Enable", true))
 	{
 		if (!item || !item->GetTemplate())
 		{
@@ -21,6 +21,7 @@ void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid
 void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 count)
 {
     std::string name;
+	
     if (count > 1)
     {
         name = Acore::StringFormat("|cff9d9d9d|Hitem:{}::::::::80:::::|h[{}]|h|rx{}", item->GetTemplate()->ItemId, item->GetTemplate()->Name1, count);
@@ -36,6 +37,7 @@ void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 c
     uint32 copper = (money % GOLD) % SILVER;
 
     std::string info;
+	
     if (money < SILVER)
     {
         info = Acore::StringFormat("{} sold for {} copper.", name, copper);
