@@ -2,7 +2,7 @@
 
 void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid /*lootguid*/)
 {
-	if(sConfigMgr->GetOption("JunkToGold.Enable", true))
+	if(sConfigMgr->GetOption<bool>("JunkToGold.Enable", true))
 	{
 		if (!item || !item->GetTemplate())
 		{
