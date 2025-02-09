@@ -15,4 +15,9 @@ private:
     void SendTransactionInformation(Player* player, Item* item, uint32 count);
 };
 
+void AddSC_JunkToGold()
+{
+	new JunkToGold();
+}
+
 #endif //MODULE_JUNKTOGOLD_H
