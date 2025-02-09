@@ -8,7 +8,7 @@
 # Junk To Gold configuration
 ########################################
 #
-#    MyModule.Enable
+#    JunkToGold.Enable
 #        Description: (Default: 1) Enable or Disable Module
 #        Default:     0 - Disabled
 #                     1 - Enabled
