@@ -91,6 +91,6 @@ void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 c
         }
     }
 	
-	LOG_DEBUG("JunkToGold", "{}", info);
+	LOG_INFO("JunkToGold", "{}", info);
     ChatHandler(player->GetSession()).SendSysMessage(info);
 }
