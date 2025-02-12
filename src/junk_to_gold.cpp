@@ -21,7 +21,7 @@ void JunkToGold::OnQuestRewardItem(Player* player, Item* item, uint32 count)
         if (!item || !item->GetTemplate())
             return;
 
-        if(sConfigMgr->GetOption<bool>("JunkToGold.Logging.Enable", true))
+        if(isLogEnabled)
             LOG_INFO("server.world", "Player {} Recieved Quest Reward: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
 
         Process(player, item, count);
@@ -38,8 +38,10 @@ void JunkToGold::Process(Player* player, Item* item, uint32 count)
 
     uint32 quality = item->GetTemplate()->Quality;
 
-    if (quality < qualityKeys.size() && sConfigMgr->GetOption<bool>(QUALITY_ARRAY[quality], true))
+    if (quality < QUALITY_ARRAY.size() && sConfigMgr->GetOption<bool>(QUALITY_ARRAY[quality], true))
     {
+        LOG_DEBUG("server.world", "{}", sConfigMgr->GetOption<bool>(QUALITY_ARRAY[quality], true));
+
         SendTransactionInformation(player, item, count);
         player->ModifyMoney(item->GetTemplate()->SellPrice * count);
         player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
