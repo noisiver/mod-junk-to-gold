@@ -8,7 +8,7 @@ void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid
             return;
 
         if(isLogEnabled)
-            LOG_INFO("server.world", "Player {} Looted Item: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
+            LOG_INFO("junktogold", "Player {} Looted Item: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
 
         Process(player, item, count);
     }
@@ -22,7 +22,7 @@ void JunkToGold::OnQuestRewardItem(Player* player, Item* item, uint32 count)
             return;
 
         if(isLogEnabled)
-            LOG_INFO("server.world", "Player {} Recieved Quest Reward: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
+            LOG_INFO("junktogold", "Player {} Recieved Quest Reward: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
 
         Process(player, item, count);
     }
@@ -40,8 +40,6 @@ void JunkToGold::Process(Player* player, Item* item, uint32 count)
 
     if (quality < QUALITY_ARRAY.size() && sConfigMgr->GetOption<bool>(QUALITY_ARRAY[quality], true))
     {
-        LOG_DEBUG("server.world", "{}", sConfigMgr->GetOption<bool>(QUALITY_ARRAY[quality], true));
-
         SendTransactionInformation(player, item, count);
         player->ModifyMoney(item->GetTemplate()->SellPrice * count);
         player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
@@ -105,7 +103,7 @@ void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 c
 
 	if(isLogEnabled)
     {
-        LOG_INFO("server.world", "{}", info);
+        LOG_INFO("junktogold", "{}", info);
     }
 
     ChatHandler(player->GetSession()).SendSysMessage(info);
