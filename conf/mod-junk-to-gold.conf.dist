@@ -23,15 +23,23 @@ JunkToGold.Enable = 1
 #        Default:     0 - Disabled
 #                     1 - Enabled
 #
+#   JunkToGold.Quality.0 ITEM_QUALITY_POOR (Gray items)
+#   JunkToGold.Quality.1 ITEM_QUALITY_NORMAL (White items)
+#   JunkToGold.Quality.2 ITEM_QUALITY_UNCOMMON (Green items)
+#   JunkToGold.Quality.3 ITEM_QUALITY_RARE (Blue items)
+#   JunkToGold.Quality.4 ITEM_QUALITY_EPIC (Purple items)
+#   JunkToGold.Quality.5 ITEM_QUALITY_LEGENDARY (Orange items)
+#   JunkToGold.Quality.6 ITEM_QUALITY_ARTIFACT (Golden items)
+#   JunkToGold.Quality.7 ITEM_QUALITY_HEIRLOOM (Light yellow items)
 
-JunkToGold.Quality.0 = 1   # ITEM_QUALITY_POOR (Gray items)
-JunkToGold.Quality.1 = 0   # ITEM_QUALITY_NORMAL (White items)
-JunkToGold.Quality.2 = 0   # ITEM_QUALITY_UNCOMMON (Green items)
-JunkToGold.Quality.3 = 0   # ITEM_QUALITY_RARE (Blue items)
-JunkToGold.Quality.4 = 0   # ITEM_QUALITY_EPIC (Purple items)
-JunkToGold.Quality.5 = 0   # ITEM_QUALITY_LEGENDARY (Orange items)
-JunkToGold.Quality.6 = 0   # ITEM_QUALITY_ARTIFACT (Golden items)
-JunkToGold.Quality.7 = 0   # ITEM_QUALITY_HEIRLOOM (Light yellow items)
+JunkToGold.Quality.0 = 1
+JunkToGold.Quality.1 = 0
+JunkToGold.Quality.2 = 0
+JunkToGold.Quality.3 = 0
+JunkToGold.Quality.4 = 0
+JunkToGold.Quality.5 = 0
+JunkToGold.Quality.6 = 0
+JunkToGold.Quality.7 = 0
 
 ########################################
 #

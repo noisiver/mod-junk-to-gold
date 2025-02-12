@@ -49,14 +49,17 @@ void JunkToGold::Process(Player* player, Item* item, uint32 count)
 void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 count)
 {
     std::string name;
+    std::string NID;
 
     if (count > 1)
     {
         name = Acore::StringFormat("|cff9d9d9d|Hitem:{}::::::::80:::::|h[{}]|h|rx{}", item->GetTemplate()->ItemId, item->GetTemplate()->Name1, count);
+        NID = Acore::StringFormat("[Item Name: {} | Item ID: {} | Count: {}]", item->GetTemplate()->Name1, item->GetTemplate()->ItemId, count);
     }
     else
     {
         name = Acore::StringFormat("|cff9d9d9d|Hitem:{}::::::::80:::::|h[{}]|h|r", item->GetTemplate()->ItemId, item->GetTemplate()->Name1);
+        NID = Acore::StringFormat("[Item Name: {} | Item ID: {}]", item->GetTemplate()->Name1, item->GetTemplate()->ItemId);
     }
 
     uint32 money = item->GetTemplate()->SellPrice * count;
@@ -65,20 +68,24 @@ void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 c
     uint32 copper = (money % GOLD) % SILVER;
 
     std::string info;
+    std::string loginfo;
 
     if (money < SILVER)
     {
         info = Acore::StringFormat("{} sold for {} copper.", name, copper);
+        loginfo = Acore::StringFormat("Player {} has Sold Item {} for {} copper.", player->GetName(), NID copper);
     }
     else if (money < GOLD)
     {
         if (copper > 0)
         {
             info = Acore::StringFormat("{} sold for {} silver and {} copper.", name, silver, copper);
+            loginfo = Acore::StringFormat("Player {} has Sold Item {} for {} silver and {} copper.", player->GetName(), NID, silver, copper);
         }
         else
         {
             info = Acore::StringFormat("{} sold for {} silver.", name, silver);
+            loginfo = Acore::StringFormat("Player {} has Sold Item {} for {} silver.", player->GetName(), NID, silver);
         }
     }
     else
@@ -86,25 +93,29 @@ void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 c
         if (copper > 0 && silver > 0)
         {
             info = Acore::StringFormat("{} sold for {} gold, {} silver and {} copper.", name, gold, silver, copper);
+            loginfo = Acore::StringFormat("Player {} has Sold Item {} for {} silver and {} copper.", player->GetName(), NID, silver, copper);
         }
         else if (copper > 0)
         {
             info = Acore::StringFormat("{} sold for {} gold and {} copper.", name, gold, copper);
+            loginfo = Acore::StringFormat("Player {} has Sold Item {} for {} gold and {} copper.", player->GetName(), NID, gold, copper);
         }
         else if (silver > 0)
         {
             info = Acore::StringFormat("{} sold for {} gold and {} silver.", name, gold, silver);
+            loginfo = Acore::StringFormat("Player {} has Sold Item {} for {} gold and {} silver.", player->GetName(), NID, gold, silver);
         }
         else
         {
             info = Acore::StringFormat("{} sold for {} gold.", name, gold);
+            loginfo = Acore::StringFormat("Player {} has Sold Item {} for {} gold.", player->GetName(), NID, gold);
         }
     }
 
-	if(isLogEnabled)
-    {
-        LOG_INFO("junktogold", "{}", info);
-    }
-
     ChatHandler(player->GetSession()).SendSysMessage(info);
+
+    if(isLogEnabled)
+    {
+        LOG_INFO("junktogold", "{}", loginfo);
+    }
 }
