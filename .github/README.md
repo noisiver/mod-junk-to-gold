@@ -4,6 +4,11 @@
 This module will automatically sell gray items when the player loots them
 
 ```
+[worldserver]
+
+########################################
+# Junk To Gold configuration
+########################################
 #
 #    JunkToGold.Enable
 #        Description: (Default: 1) Enable or Disable Module
@@ -12,6 +17,47 @@ This module will automatically sell gray items when the player loots them
 #
 
 JunkToGold.Enable = 1
+
+########################################
+#
+#    JunkToGold.Quality.X
+#        Description: Enable or Disable converting specific item qualities to gold.
+#        Default:     0 - Disabled
+#                     1 - Enabled
+#
+#   JunkToGold.Quality.0 ITEM_QUALITY_POOR (Gray items)
+#   JunkToGold.Quality.1 ITEM_QUALITY_NORMAL (White items)
+#   JunkToGold.Quality.2 ITEM_QUALITY_UNCOMMON (Green items)
+#   JunkToGold.Quality.3 ITEM_QUALITY_RARE (Blue items)
+#   JunkToGold.Quality.4 ITEM_QUALITY_EPIC (Purple items)
+#   JunkToGold.Quality.5 ITEM_QUALITY_LEGENDARY (Orange items)
+#   JunkToGold.Quality.6 ITEM_QUALITY_ARTIFACT (Golden items)
+#   JunkToGold.Quality.7 ITEM_QUALITY_HEIRLOOM (Light yellow items)
+
+JunkToGold.Quality.0 = 1
+JunkToGold.Quality.1 = 0
+JunkToGold.Quality.2 = 0
+JunkToGold.Quality.3 = 0
+JunkToGold.Quality.4 = 0
+JunkToGold.Quality.5 = 0
+JunkToGold.Quality.6 = 0
+JunkToGold.Quality.7 = 0
+
+########################################
+#
+#    JunkToGold.Logging.Enable
+#        Description: (Default: 1) Enable Logging
+#        Default:     0 - Disabled
+#                     1 - Enabled
+#
+
+JunkToGold.Logging.Enable = 1
+```
+
+also add this to your `worldserver.conf` file you can find the other Appender configuration in line `590`
+```
+Appender.JunkToGold=2,5,0,JunkToGold.log,w
+Logger.junktogold=5,Console JunkToGold
 ```
 
 ## Credits
