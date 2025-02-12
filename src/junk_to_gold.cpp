@@ -73,7 +73,7 @@ void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 c
     if (money < SILVER)
     {
         info = Acore::StringFormat("{} sold for {} copper.", name, copper);
-        loginfo = Acore::StringFormat("Player {} has Sold Item {} for {} copper.", player->GetName(), NID copper);
+        loginfo = Acore::StringFormat("Player {} has Sold Item {} for {} copper.", player->GetName(), NID, copper);
     }
     else if (money < GOLD)
     {
@@ -93,7 +93,7 @@ void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 c
         if (copper > 0 && silver > 0)
         {
             info = Acore::StringFormat("{} sold for {} gold, {} silver and {} copper.", name, gold, silver, copper);
-            loginfo = Acore::StringFormat("Player {} has Sold Item {} for {} silver and {} copper.", player->GetName(), NID, silver, copper);
+            loginfo = Acore::StringFormat("Player {} has Sold Item {} for {} gold, {} silver and {} copper.", player->GetName(), NID, gold, silver, copper);
         }
         else if (copper > 0)
         {
