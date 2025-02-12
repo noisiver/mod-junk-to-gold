@@ -15,3 +15,13 @@
 #
 
 JunkToGold.Enable = 1
+
+########################################
+#
+#    JunkToGold.Logging.Enable
+#        Description: (Default: 1) Enable Logging
+#        Default:     0 - Disabled
+#                     1 - Enabled
+#
+
+JunkToGold.Logging.Enable = 1

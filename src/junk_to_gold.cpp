@@ -39,7 +39,7 @@ void JunkToGold::OnQuestRewardItem(Player* player, Item* item, uint32 count)
 void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 count)
 {
     std::string name;
-	
+
     if (count > 1)
     {
         name = Acore::StringFormat("|cff9d9d9d|Hitem:{}::::::::80:::::|h[{}]|h|rx{}", item->GetTemplate()->ItemId, item->GetTemplate()->Name1, count);
@@ -55,7 +55,7 @@ void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 c
     uint32 copper = (money % GOLD) % SILVER;
 
     std::string info;
-	
+
     if (money < SILVER)
     {
         info = Acore::StringFormat("{} sold for {} copper.", name, copper);
@@ -90,7 +90,11 @@ void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 c
             info = Acore::StringFormat("{} sold for {} gold.", name, gold);
         }
     }
-	
-	LOG_INFO("JunkToGold", "{}", info);
+
+	if(sConfigMgr->GetOption<bool>("JunkToGold.Logging.Enable", true))
+    {
+        LOG_INFO("JunkToGold", info);
+    }
+
     ChatHandler(player->GetSession()).SendSysMessage(info);
 }
