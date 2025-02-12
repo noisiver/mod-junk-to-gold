@@ -45,6 +45,16 @@ JunkToGold.Quality.7 = 0
 
 ########################################
 #
+#    JunkToGold.SkipItems
+#        Description: Define Which (class, subclass) pairs should be skipped
+#        Format: "class:subclass, class:subclass, ...."
+#        Refer to this link for class and subclass ID https://www.azerothcore.org/wiki/item_template
+#
+
+JunkToGold.SkipItems = "12:0, 0:1, 0:2, 0:3, 0:4, 0:5, 0:6, 0:7, 0:8, 1:0, 1:2, 1:3, 1:4, 1:5, 1:6, 1:7, 1:8, 2:14"
+
+########################################
+#
 #    JunkToGold.Logging.Enable
 #        Description: (Default: 1) Enable Logging
 #        Default:     0 - Disabled
