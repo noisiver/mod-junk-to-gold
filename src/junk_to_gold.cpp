@@ -2,33 +2,43 @@
 
 void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid /*lootguid*/)
 {
-    if (sConfigMgr->GetOption<bool>("JunkToGold.Enable", true) || !item || !item->GetTemplate())
-        return;
-
-    uint32 quality = item->GetTemplate()->Quality;
-
-    if(sConfigMgr->GetOption<bool>("JunkToGold.Logging.Enable", true))
-        LOG_INFO("junktogold", "Player {} looted item: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
-
-    if (sConfigMgr->GetOption<bool>("JunkToGold.Quality." + std::to_string(quality), false))
+    if(IsEnabled)
     {
-        SendTransactionInformation(player, item, count);
-        player->ModifyMoney(item->GetTemplate()->SellPrice * count);
-        player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
+        if (!item || !item->GetTemplate())
+            return;
+
+        if(isLogEnabled)
+            LOG_INFO("server.world", "Player {} Looted Item: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
+
+        Process(player, item, count);
     }
 }
 
 void JunkToGold::OnQuestRewardItem(Player* player, Item* item, uint32 count)
 {
-    if (sConfigMgr->GetOption<bool>("JunkToGold.Enable", true) || !item || !item->GetTemplate())
-        return;
+    if(IsEnabled)
+    {
+        if (!item || !item->GetTemplate())
+            return;
+
+        if(sConfigMgr->GetOption<bool>("JunkToGold.Logging.Enable", true))
+            LOG_INFO("server.world", "Player {} Recieved Quest Reward: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
+
+        Process(player, item, count);
+    }
+}
+
+void JunkToGold::Process(Player* player, Item* item, uint32 count)
+{
+    static const std::array<std::string, 8> QUALITY_ARRAY = {
+        "JunkToGold.Quality.0", "JunkToGold.Quality.1", "JunkToGold.Quality.2",
+        "JunkToGold.Quality.3", "JunkToGold.Quality.4", "JunkToGold.Quality.5",
+        "JunkToGold.Quality.6", "JunkToGold.Quality.7"
+    };
 
     uint32 quality = item->GetTemplate()->Quality;
 
-    if(sConfigMgr->GetOption<bool>("JunkToGold.Logging.Enable", true))
-        LOG_INFO("junktogold", "Player {} Recieved Quest Reward: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
-
-    if (sConfigMgr->GetOption<bool>("JunkToGold.Quality." + std::to_string(quality), false))
+    if (quality < qualityKeys.size() && sConfigMgr->GetOption<bool>(QUALITY_ARRAY[quality], true))
     {
         SendTransactionInformation(player, item, count);
         player->ModifyMoney(item->GetTemplate()->SellPrice * count);
@@ -91,9 +101,9 @@ void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 c
         }
     }
 
-	if(sConfigMgr->GetOption<bool>("JunkToGold.Logging.Enable", true))
+	if(isLogEnabled)
     {
-        LOG_INFO("junktogold", info);
+        LOG_INFO("server.world", "{}", info);
     }
 
     ChatHandler(player->GetSession()).SendSysMessage(info);
