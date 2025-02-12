@@ -18,6 +18,23 @@ JunkToGold.Enable = 1
 
 ########################################
 #
+#    JunkToGold.Quality.X
+#        Description: Enable or Disable converting specific item qualities to gold.
+#        Default:     0 - Disabled
+#                     1 - Enabled
+#
+
+JunkToGold.Quality.0 = 1   # ITEM_QUALITY_POOR (Gray items)
+JunkToGold.Quality.1 = 0   # ITEM_QUALITY_NORMAL (White items)
+JunkToGold.Quality.2 = 0   # ITEM_QUALITY_UNCOMMON (Green items)
+JunkToGold.Quality.3 = 0   # ITEM_QUALITY_RARE (Blue items)
+JunkToGold.Quality.4 = 0   # ITEM_QUALITY_EPIC (Purple items)
+JunkToGold.Quality.5 = 0   # ITEM_QUALITY_LEGENDARY (Orange items)
+JunkToGold.Quality.6 = 0   # ITEM_QUALITY_ARTIFACT (Golden items)
+JunkToGold.Quality.7 = 0   # ITEM_QUALITY_HEIRLOOM (Light yellow items)
+
+########################################
+#
 #    JunkToGold.Logging.Enable
 #        Description: (Default: 1) Enable Logging
 #        Default:     0 - Disabled

@@ -2,38 +2,38 @@
 
 void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid /*lootguid*/)
 {
-	if(sConfigMgr->GetOption<bool>("JunkToGold.Enable", true))
-	{
-		if (!item || !item->GetTemplate())
-		{
-			return;
-		}
+    if (sConfigMgr->GetOption<bool>("JunkToGold.Enable", true) || !item || !item->GetTemplate())
+        return;
 
-		if (item->GetTemplate()->Quality == ITEM_QUALITY_POOR)
-		{
-			SendTransactionInformation(player, item, count);
-			player->ModifyMoney(item->GetTemplate()->SellPrice * count);
-			player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
-		}
-	}
+    uint32 quality = item->GetTemplate()->Quality;
+
+    if(sConfigMgr->GetOption<bool>("JunkToGold.Logging.Enable", true))
+        LOG_INFO("JunkToGold", "Player {} looted item: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
+
+    if (sConfigMgr->GetOption<bool>("JunkToGold.Quality." + std::to_string(quality), false))
+    {
+        SendTransactionInformation(player, item, count);
+        player->ModifyMoney(item->GetTemplate()->SellPrice * count);
+        player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
+    }
 }
 
 void JunkToGold::OnQuestRewardItem(Player* player, Item* item, uint32 count)
 {
-	if(sConfigMgr->GetOption<bool>("JunkToGold.Enable", true))
-	{
-		if (!item || !item->GetTemplate())
-		{
-			return;
-		}
+    if (sConfigMgr->GetOption<bool>("JunkToGold.Enable", true) || !item || !item->GetTemplate())
+        return;
 
-		if (item->GetTemplate()->Quality == ITEM_QUALITY_POOR)
-		{
-			SendTransactionInformation(player, item, count);
-			player->ModifyMoney(item->GetTemplate()->SellPrice * count);
-			player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
-		}
-	}
+    uint32 quality = item->GetTemplate()->Quality;
+
+    if(sConfigMgr->GetOption<bool>("JunkToGold.Logging.Enable", true))
+        LOG_INFO("JunkToGold", "Player {} Recieved Quest Reward: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
+
+    if (sConfigMgr->GetOption<bool>("JunkToGold.Quality." + std::to_string(quality), false))
+    {
+        SendTransactionInformation(player, item, count);
+        player->ModifyMoney(item->GetTemplate()->SellPrice * count);
+        player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
+    }
 }
 
 void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 count)
