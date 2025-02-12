@@ -71,7 +71,7 @@ void JunkToGold::Process(Player* player, Item* item, uint32 count)
     };
 
     uint32 quality = item->GetTemplate()->Quality;
-    uint32 iclas = item->GetTemplate()->Class;
+    uint32 iclass = item->GetTemplate()->Class;
     uint32 isubclass = item->GetTemplate()->SubClass;
 
     if (quality < QUALITY_ARRAY.size() && sConfigMgr->GetOption<bool>(QUALITY_ARRAY[quality], true))
