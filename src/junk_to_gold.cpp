@@ -83,7 +83,7 @@ void JunkToGold::Process(Player* player, Item* item, uint32 count)
             player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
         }
         else
-            LOG_INFO("junktogold", "Skipping Item: {} | ID: {} | Class: {} | SubClass: {}", item->GetTemplate()->Name1, item->GetTemplate()->ItemId, iclas, isubclass);
+            LOG_INFO("junktogold", "Skipping Item: {} | ID: {} | Class: {} | SubClass: {}", item->GetTemplate()->Name1, item->GetTemplate()->ItemId, iclass, isubclass);
     }
 }
 
