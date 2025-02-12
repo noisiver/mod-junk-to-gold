@@ -18,6 +18,24 @@ void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid
 	}
 }
 
+void JunkToGold::OnQuestRewardItem(Player* player, Item* item, uint32 count)
+{
+	if(sConfigMgr->GetOption<bool>("JunkToGold.Enable", true))
+	{
+		if (!item || !item->GetTemplate())
+		{
+			return;
+		}
+
+		if (item->GetTemplate()->Quality == ITEM_QUALITY_POOR)
+		{
+			SendTransactionInformation(player, item, count);
+			player->ModifyMoney(item->GetTemplate()->SellPrice * count);
+			player->DestroyItem(item->GetBagSlot(), item->GetSlot(), true);
+		}
+	}
+}
+
 void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 count)
 {
     std::string name;
@@ -72,6 +90,7 @@ void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 c
             info = Acore::StringFormat("{} sold for {} gold.", name, gold);
         }
     }
-
+	
+	LOG_DEBUG("JunkToGold", "{}", info);
     ChatHandler(player->GetSession()).SendSysMessage(info);
 }
