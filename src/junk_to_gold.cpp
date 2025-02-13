@@ -1,16 +1,5 @@
 #include "junk_to_gold.h"
 
-/**
- * @brief Handles the event when a player loots an item.
- *
- * This function is called whenever a player loots an item. If the module is enabled,
- * it processes the looted item and logs the event if logging is enabled.
- *
- * @param player Pointer to the player who looted the item.
- * @param item Pointer to the item that was looted.
- * @param count The number of items looted.
- * @param lootguid The GUID of the loot (unused).
- */
 void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid /*lootguid*/)
 {
     if(IsEnabled)
@@ -25,18 +14,6 @@ void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid
     }
 }
 
-/**
- * @brief Handles the event when a player receives a quest reward item.
- *
- * This function is called when a player receives an item as a reward for completing a quest.
- * It checks if the module is enabled and if the item and its template are valid.
- * If logging is enabled, it logs the event with the player's name, item name, and count.
- * Finally, it processes the item for the player.
- *
- * @param player Pointer to the Player object who received the quest reward.
- * @param item Pointer to the Item object that was received as a quest reward.
- * @param count The number of items received as a quest reward.
- */
 void JunkToGold::OnQuestRewardItem(Player* player, Item* item, uint32 count)
 {
     if(IsEnabled)
@@ -51,17 +28,6 @@ void JunkToGold::OnQuestRewardItem(Player* player, Item* item, uint32 count)
     }
 }
 
-/**
- * @brief Processes the given item for the player, converting it to gold if it meets certain criteria.
- *
- * This function checks the quality of the item and verifies if it should be converted to gold based on configuration settings.
- * If the item is not in the skip list, it will send transaction information to the player, modify the player's money by the item's sell price,
- * and destroy the item from the player's inventory.
- *
- * @param player Pointer to the Player object who owns the item.
- * @param item Pointer to the Item object to be processed.
- * @param count The number of items to be processed.
- */
 void JunkToGold::Process(Player* player, Item* item, uint32 count)
 {
     static const std::array<std::string, 8> QUALITY_ARRAY = {
@@ -73,9 +39,16 @@ void JunkToGold::Process(Player* player, Item* item, uint32 count)
     uint32 quality = item->GetTemplate()->Quality;
     uint32 iclass = item->GetTemplate()->Class;
     uint32 isubclass = item->GetTemplate()->SubClass;
+    uint32 itemId = item->GetTemplate()->ItemId;
 
     if (quality < QUALITY_ARRAY.size() && sConfigMgr->GetOption<bool>(QUALITY_ARRAY[quality], true))
     {
+        if (skipItemsID.find(itemId) != skipItemsID.end())
+        {
+            LOG_INFO("junktogold", "Skipping Item: {} | ID: {} | Class: {} | SubClass: {}", item->GetTemplate()->Name1, item->GetTemplate()->ItemId, iclass, isubclass);
+            return;
+        }
+
         if(!skipItems.contains({iclass, isubclass}))
         {
             SendTransactionInformation(player, item, count);
@@ -87,16 +60,6 @@ void JunkToGold::Process(Player* player, Item* item, uint32 count)
     }
 }
 
-/**
- * @brief Sends transaction information to the player and logs the transaction if logging is enabled.
- *
- * This function formats and sends a message to the player about the sale of an item, including the amount of gold, silver, and copper received.
- * It also logs the transaction details if logging is enabled.
- *
- * @param player Pointer to the Player object representing the player who sold the item.
- * @param item Pointer to the Item object representing the item that was sold.
- * @param count The number of items sold.
- */
 void JunkToGold::SendTransactionInformation(Player* player, Item* item, uint32 count)
 {
     std::string name;
