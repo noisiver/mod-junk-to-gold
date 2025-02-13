@@ -41,7 +41,7 @@ bool JunkToGold::IsQuestItem(Player* player, Item* item)
 
     for(const auto& QUEST_ENTRY : quests)
     {
-        uint32 questId = QUESTS_ENTRY.first;
+        uint32 questId = QUEST_ENTRY.first;
         const Quest* quest = sObjectMgr->GetQuestTemplate(questId);
 
         if(!quest) continue;
