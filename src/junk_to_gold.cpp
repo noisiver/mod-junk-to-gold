@@ -9,8 +9,8 @@ void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid
 
         if(isLogEnabled)
             LOG_INFO("junktogold", "Player {} Looted Item: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
-
-        Process(player, item, count);
+        if(!IsQuestItem(player, item))
+            Process(player, item, count);
     }
 }
 
@@ -23,9 +23,34 @@ void JunkToGold::OnQuestRewardItem(Player* player, Item* item, uint32 count)
 
         if(isLogEnabled)
             LOG_INFO("junktogold", "Player {} Recieved Quest Reward: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
-
-        Process(player, item, count);
+        if(!IsQuestItem(player, item))
+            Process(player, item, count);
     }
+}
+
+bool JunkToGold::IsQuestItem(Player* player, Item* item)
+{
+    if(!item || !item->GetTemplate())
+        return false;
+
+    uint32 itemId = item->GetTemplate()->ItemId;
+    QuestStatusMap& quests = player->GetQuestStatusMap();
+
+    for(const auto& QUEST_ENTRY : quests)
+    {
+        uint32 questId = QUESTS_ENTRY.first;
+        const Quest* quest = sObjectMgr->GetQuestTemplate(questId);
+
+        if(!quest) continue;
+
+        for(uint8 i = 0; i < QUEST_ITEM_OBJECTIVES_COUNT; ++i)
+        {
+            if(quest->RequiredItemId[i] == itemId)
+                return true;
+        }
+    }
+
+    return false;
 }
 
 void JunkToGold::Process(Player* player, Item* item, uint32 count)

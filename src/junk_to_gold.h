@@ -6,6 +6,7 @@
 #include "Chat.h"
 #include "Player.h"
 #include "Log.h"
+#include "QuestDef.h"
 #include <unordered_set>
 #include <string>
 #include <sstream>
@@ -54,6 +55,7 @@ public:
 	void OnQuestRewardItem(Player* player, Item* item, uint32 count) override;
 
 private:
+    bool IsQuestItem(Player* player, Item* item);
     void Process(Player* player, Item* item, uint32 count);
     void SendTransactionInformation(Player* player, Item* item, uint32 count);
 
