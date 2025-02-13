@@ -38,7 +38,7 @@ public:
         std::string SkipItemIDList = sConfigMgr->GetOption<std::string>("JunkToGold.SkipItemsID", "");
         std::stringstream ssil(SkipItemIDList);
 
-        while(std::getline(ssil, token, ","))
+        while(std::getline(ssil, token, ','))
         {
             uint32 itemID;
 
