@@ -9,8 +9,11 @@ void JunkToGold::OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid
 
         if(isLogEnabled)
             LOG_INFO("junktogold", "Player {} Looted Item: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
+
         if(!IsQuestItem(player, item))
             Process(player, item, count);
+        else
+            LOG_INFO("junktogold", "Player {} looted Quest Item: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
     }
 }
 
@@ -23,8 +26,8 @@ void JunkToGold::OnQuestRewardItem(Player* player, Item* item, uint32 count)
 
         if(isLogEnabled)
             LOG_INFO("junktogold", "Player {} Recieved Quest Reward: {} (Count: {})", player->GetName(), item->GetTemplate()->Name1, count);
-        if(!IsQuestItem(player, item))
-            Process(player, item, count);
+
+        Process(player, item, count);
     }
 }
 
