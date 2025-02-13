@@ -37,7 +37,7 @@ bool JunkToGold::IsQuestItem(Player* player, Item* item)
         return false;
 
     uint32 itemId = item->GetTemplate()->ItemId;
-    QuestStatusMap& quests = player->GetQuestStatusMap();
+    QuestStatusMap& quests = player->getQuestStatusMap();
 
     for(const auto& QUEST_ENTRY : quests)
     {
