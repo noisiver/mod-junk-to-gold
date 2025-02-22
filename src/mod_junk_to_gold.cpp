@@ -7,7 +7,7 @@ class JunkToGold : public PlayerScript
 public:
     JunkToGold() : PlayerScript("JunkToGold") {}
 
-    void OnLootItem(Player* player, Item* item, uint32 count, ObjectGuid /*lootguid*/) override
+    void OnPlayerLootItem(Player* player, Item* item, uint32 count, ObjectGuid /*lootguid*/) override
     {
         if (!item || !item->GetTemplate())
         {
